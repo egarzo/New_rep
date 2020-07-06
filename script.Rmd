@@ -56,6 +56,6 @@ women = subset(data, gender == 'female')
 mean(men$death_dummy, na.rm = TRUE)
 mean(women$death_dummy, na.rm = TRUE)
 
-t.test(alive$age, dead$age, alternative = 'two.sided', confin.level = .99)
+t.test(men$death_dummy, women$death_dummy, alternative = 'two.sided', confin.level = .99)
 ```
-
+# we can reject the null-hypothesis and conclude that men die more than women in terms of corona virus. 
