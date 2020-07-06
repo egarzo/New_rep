@@ -1,0 +1,61 @@
+---
+title: "Covid 19"
+output: html_notebook
+---
+
+
+### Clean environment
+```{r}
+rm(list=ls())
+library(Hmisc)
+```
+
+
+
+
+```{r}
+data <- COVID19_line_list_data <- read_csv("~/SummerR/COVID19_line_list_data.csv")
+```
+### cleaned up death column
+```{r}
+data$death_dummy <- as.integer(data$death != 0)
+```
+
+#death rate
+```{r}
+sum(data$death_dummy) / nrow(data)
+```
+
+
+#Age
+#claim : people who die are older
+```{r}
+dead = subset(data, death_dummy == 1)
+alive = subset(data, death_dummy == 0)
+```
+
+```{r}
+mean(dead$age, na.rm = TRUE)
+mean(alive$age, na.rm = TRUE)
+```
+# is this statiscially significant
+```{r}
+t.test(alive$age, dead$age, alternative= "two.sided", confi.level = .95)
+```
+
+# normally, if p-value < .05, we reject null hypothesis
+# we can conclude that people who die from corona virus are much older
+
+
+# Gender 
+# claim: gender has no effect
+
+```{r}
+men = subset(data, gender == 'male')
+women = subset(data, gender == 'female')
+mean(men$death_dummy, na.rm = TRUE)
+mean(women$death_dummy, na.rm = TRUE)
+
+t.test(alive$age, dead$age, alternative = 'two.sided', confin.level = .99)
+```
+
